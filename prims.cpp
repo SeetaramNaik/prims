@@ -97,49 +97,80 @@ while(i--);
 void introduction_page()
 {
 glBegin(GL_POLYGON);
-glColor3f(0.9,0.3,0.1);
+/*glColor3f(0.9,0.3,0.1);
 glVertex2d(0,0);
 glColor3f(0.0,0.0,0.0);
 glVertex2d(0,height);
 glColor3f(0.0,0.0,0.0);
 glVertex2d(width,height);
 glColor3f(1.0,0.4,0.0);
+glVertex2d(width,0);*/
+glColor3f(0.9,0.72,0.9);
+glVertex2d(0,0);
+glColor3f(0.38,0.17,1.0);
+glVertex2d(0,height);
+glColor3f(0.38,0.17,1.0);
+glVertex2d(width,height);
+glColor3f(0.9,0.72,0.9);
 glVertex2d(width,0);
 glEnd();
-	 
 	
+/*glColor3f(0.0,0.0,0.55);
+glBegin(GL_QUADS);
+glVertex2d(315,30);
+glVertex2d(620,30);
+glVertex2d(620,80);
+glVertex2d(315,80);
+glEnd();*/
+
+glColor3f(0.0,0.0,0.55);
+glBegin(GL_QUADS);
+glVertex2d(300,30);
+glVertex2d(600,30);
+glVertex2d(600,80);
+glVertex2d(300,80);
+glEnd();
+
 	glLineWidth(2);
-	glColor3f(1.0,1.0,1.0);
-	
+	//glColor3f(1.0,1.0,1.0);
+	glColor3f(0.0,0.0,0.69);
 	bitmap_output(width/3, height-height/10, "SDM Institute of Technology, Ujire",GLUT_BITMAP_HELVETICA_18);
 	//glColor3f(0.9,0.8,0.0);
 
-	glColor3f(1.0,1.0,1.0);
+	//glColor3f(1.0,1.0,1.0);
 	bitmap_output(width/4+50, height-height/6, "Computer Graphics Lab with Mini Project",GLUT_BITMAP_HELVETICA_18);
-	glColor3f(1.0,1.0,1.0);
+	//glColor3f(1.0,1.0,1.0);
 	bitmap_output(width/4+55, height-height/4, "****PRIMS ALGORITHM****",GLUT_BITMAP_TIMES_ROMAN_24);
 	/*glColor3f(0.9,0.8,0.0);
 	glBegin(GL_LINE_LOOP); 
 		glVertex2f(width/3-10, height-height/5.5);
 		glVertex2f(width/3+290, height-height/5.5);
 	glEnd();*/
-	glColor3f(1.0,1.0,1.0);
-	bitmap_output(width/15+55,height-height/1.87,"---Made by---",GLUT_BITMAP_HELVETICA_18);
-
-	glColor3f(0.8,1.0,0.0);
-	bitmap_output(width/15+10,height-height/1.62,"Seetaram Naik - 4SU19CS088",GLUT_BITMAP_HELVETICA_18);
-	bitmap_output(width/15+10,height-height/1.5,"Shamanth P     - 4SU19CS089",GLUT_BITMAP_HELVETICA_18);
-	bitmap_output(width/15+10,height-height/1.4,"Shivam Ravan  - 4SU19CS091",GLUT_BITMAP_HELVETICA_18);
-	bitmap_output(width/15+10,height-height/1.3,"Skanda Bhat    - 4SU19CS095",GLUT_BITMAP_HELVETICA_18);
+	
+	glColor3f(0.82,0.0,0.64);
+	bitmap_output(width/15+55,height-height/2.2,"---Made by---",GLUT_BITMAP_HELVETICA_18);
 
 	glColor3f(1.0,1.0,1.0);
-	bitmap_output(width/15+580,height-height/1.6,"---Guided by---",GLUT_BITMAP_HELVETICA_18);
-	glColor3f(0.8,1.0,0.0);
-	bitmap_output(width/15+595,height-height/1.4,"Mr. Arjun K.",GLUT_BITMAP_TIMES_ROMAN_24);
+	//glColor3f(0.0,0.0,0.69);//blue
+	//bitmap_output(width/15+10,height-height/1.62,"Seetaram Naik - 4SU19CS088",GLUT_BITMAP_HELVETICA_18);
+	//bitmap_output(width/15+10,height-height/1.5,"Shamanth P     - 4SU19CS089",GLUT_BITMAP_HELVETICA_18);
+	//bitmap_output(width/15+10,height-height/1.4,"Shivam Ravan  - 4SU19CS091",GLUT_BITMAP_HELVETICA_18);
+	//bitmap_output(width/15+10,height-height/1.3,"Skanda Bhat    - 4SU19CS095",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(width/15+10,height-height/1.9,"Seetaram Naik (4SU19CS088)",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(width/15+10,height-height/1.7,"Shamanth P (4SU19CS089)",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(width/15+10,height-height/1.55,"Shivam Ravan (4SU19CS091)",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(width/15+10,height-height/1.42,"Skanda Bhat (4SU19CS095)",GLUT_BITMAP_HELVETICA_18);
+
+	glColor3f(0.82,0.0,0.64);
+	bitmap_output(width/15+580,height-height/1.8,"---Guided by---",GLUT_BITMAP_HELVETICA_18);
+	glColor3f(1.0,1.0,1.0);
+	bitmap_output(width/15+595,height-height/1.6,"Mr. Arjun K.",GLUT_BITMAP_TIMES_ROMAN_24);
 	glFlush();
 	delay();
 	glColor3f(1.0,1.0,0.9);
-	bitmap_output(width/5+150, 30, "Press 'ENTER' to continue",GLUT_BITMAP_TIMES_ROMAN_24);
+	bitmap_output(width/5+135, 45, "Press 'ENTER' to continue",GLUT_BITMAP_TIMES_ROMAN_24);
+	
+	//bitmap_output(width/3, height-height/10, "SDM Institute of Technology, Ujire",GLUT_BITMAP_HELVETICA_18);
 	glFlush();
 	delay();
 	//glutPostRedisplay();
@@ -159,13 +190,22 @@ glVertex2d(width,0);
 glEnd();
 
 
-	glColor3f(1.0,1.0,1.0);
+/*	glColor3f(1.0,1.0,1.0);
 	bitmap_output(300, height-100, "****PRIMS ALGORITHM****",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(330, height-200, "---INSTRUCTIONS---",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(300, height-300, "Press 'S'        -  To START ",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(300, height-350, "Press 'I'         -  About Prims algorithm ",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(300, height-400, "Press 'H'        -  For HELP  ",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(300, height-450, "Press 'ESC'   -  To QUIT",GLUT_BITMAP_HELVETICA_18);
+	glColor3f(0.0,0.0,0.0);
+	bitmap_output(500, height-570, "Press 'A' to go to INTRODUCTION PAGE",GLUT_BITMAP_HELVETICA_18);*/
+	glColor3f(1.0,1.0,1.0);
+	bitmap_output(300, height-100, "****PRIMS ALGORITHM****",GLUT_BITMAP_TIMES_ROMAN_24);
+	bitmap_output(330, height-200, "---INSTRUCTIONS---",GLUT_BITMAP_TIMES_ROMAN_24);
+	bitmap_output(370, height-300, "Press 'S' (To START) ",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(330, height-350, "Press 'I' (About Prims algorithm) ",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(375, height-400, "Press 'H' (For HELP)  ",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(365, height-450, "Press 'ESC' (To QUIT)",GLUT_BITMAP_HELVETICA_18);
 	glColor3f(0.0,0.0,0.0);
 	bitmap_output(500, height-570, "Press 'A' to go to INTRODUCTION PAGE",GLUT_BITMAP_HELVETICA_18);
 }
