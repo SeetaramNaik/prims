@@ -1,12 +1,5 @@
-// prims.cpp : Defines the entry point for the console application.
-//
 
 #include "stdafx.h"
-
-// prims.cpp : Defines the entry point for the console application.
-//
-
-//#include "stdafx.h"
 
 #include<stdlib.h>
 #include<iostream>
@@ -25,7 +18,7 @@ int costmatrix[100][100],undo_cost_stack[100],lineundostack[100][100];
 int undone=0,nf=0,f=0,found=0,nodenum=1,load=0;
 int t[100][2],totalcost;
 bool paused=false;
-bool start=false,enterpressed=false,resdisplay=false,show_algorithm=false,back=false;
+bool start=false,enterpressed=false,resdisplay=false,show_algorithm=false,back=false,show_help=false;
 char undostack[100];
 char num[2];
 char text[15]="Draw mode:NONE";
@@ -95,11 +88,9 @@ void bitmap_output(int x, int y, char *string, void *font)
 
 //this delays out execution of next instruction
 void delay(){
-//int i=190000000;
-	int i=190000;
+int i=190000;
 while(i--);
 }
-
 
 
 //this function displays staring window
@@ -145,36 +136,37 @@ glEnd();
 	bitmap_output(width/15+580,height-height/1.6,"---Guided by---",GLUT_BITMAP_HELVETICA_18);
 	glColor3f(0.8,1.0,0.0);
 	bitmap_output(width/15+595,height-height/1.4,"Mr. Arjun K.",GLUT_BITMAP_TIMES_ROMAN_24);
-	glFlush();//glutSwapBuffers(); 
+	glFlush();
 	delay();
 	glColor3f(1.0,1.0,0.9);
 	bitmap_output(width/5+150, 30, "Press 'ENTER' to continue",GLUT_BITMAP_TIMES_ROMAN_24);
-	glFlush();//glutSwapBuffers();
+	glFlush();
 	delay();
 	//glutPostRedisplay();
 }
 
 void instruction_page()
 {
-	glBegin(GL_POLYGON);
-//glColor3f(1.0,0.4,0.0);
-glColor3f(0.65,0.65,0.65);
+glBegin(GL_POLYGON);
+glColor3f(0.9,0.3,0.1);
 glVertex2d(0,0);
-///glColor3f(0.0,0.0,0.0);
 glColor3f(0.0,0.138,0.96);
 glVertex2d(0,height);
 glColor3f(0.0,0.138,0.96);
 glVertex2d(width,height);
-glColor3f(0.65,0.65,0.65);
+glColor3f(1.0,0.4,0.0);
 glVertex2d(width,0);
 glEnd();
+
+
 	glColor3f(1.0,1.0,1.0);
 	bitmap_output(300, height-100, "****PRIMS ALGORITHM****",GLUT_BITMAP_TIMES_ROMAN_24);
-	//bitmap_output(10, height-120, "****INSTRUCTIONS****",GLUT_BITMAP_TIMES_ROMAN_24);
-	bitmap_output(300, height-200, "Press 'S'       -  To START ",GLUT_BITMAP_HELVETICA_18);
-	bitmap_output(300, height-250, "Press 'I'         -  To see Working of Prims algorithm ",GLUT_BITMAP_HELVETICA_18);
-	bitmap_output(300, height-300, "Press 'ESC'   -  To QUIT",GLUT_BITMAP_HELVETICA_18);
-	glColor3f(0.0,0.0,1.0);
+	bitmap_output(330, height-200, "---INSTRUCTIONS---",GLUT_BITMAP_TIMES_ROMAN_24);
+	bitmap_output(300, height-300, "Press 'S'        -  To START ",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(300, height-350, "Press 'I'         -  About Prims algorithm ",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(300, height-400, "Press 'H'        -  For HELP  ",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(300, height-450, "Press 'ESC'   -  To QUIT",GLUT_BITMAP_HELVETICA_18);
+	glColor3f(0.0,0.0,0.0);
 	bitmap_output(500, height-570, "Press 'A' to go to INTRODUCTION PAGE",GLUT_BITMAP_HELVETICA_18);
 }
 
@@ -204,21 +196,53 @@ void draw_instructions()
 	bitmap_output(10, height-height/8.5, "-> Press N to Create Nodes",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(10,height-height/6.2, "-> Press E to draw Edges",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(10, height-height/4.9, "-> Press D to draw spanning tree",GLUT_BITMAP_HELVETICA_18);
+	glColor3f(0.0,0.0,0.0);
+	bitmap_output(650, height-570, "Press 'B' to go Back",GLUT_BITMAP_HELVETICA_18);
+}
+
+void help_page()
+{
+	glBegin(GL_POLYGON);
+    glColor3f(1.0,1.0,1.0);
+    glVertex2d(0,0);
+    glColor3f(0.32,0.49,0.46);
+	glVertex2d(0,height);
+	glColor3f(0.32,0.49,0.46);
+	glVertex2d(width,height);
+	glColor3f(1.0,1.0,1.0);
+	glVertex2d(width,0);
+	glEnd();
+	glColor3f(0.0,1.0,0.0);
+	bitmap_output(290, height-70, "****PRIMS ALGORITHM****",GLUT_BITMAP_TIMES_ROMAN_24);
+	glColor3f(1.0,1.0,1.0);
+	bitmap_output(370, height-150, "---HELP---",GLUT_BITMAP_TIMES_ROMAN_24);
+	glColor3f(1.0,0.0,0.0);
+	bitmap_output(345, height-210, "Keys              Functions",GLUT_BITMAP_HELVETICA_18);
+	glColor3f(0.0,0.0,0.61);
+	bitmap_output(345, height-250, "Enter    -    Instruction page",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(345, height-280, "S or s   -    To start the Prims Simulation",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(345, height-310, "I or i     -    To see the algorithm of Prims",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(345, height-340, "H or h   -    For Help ",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(345, height-370, "A or a   -    To go back to Introduction Page",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(345, height-400, "B or b   -    To go back to Instruction Page",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(345, height-430, "Z or z    -   To Undo",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(345, height-460, "Y or y    -   To Redo",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(345, height-490, "ESC      -    To Quit",GLUT_BITMAP_HELVETICA_18);
+	glColor3f(0.0,0.0,0.0);
+bitmap_output(width/15+600, height-570, "Press 'B' to go back",GLUT_BITMAP_HELVETICA_18);
 }
 
 
 void algorithm()
 { 
 glBegin(GL_POLYGON);
-//glColor3f(1.0,0.4,0.0);
-glColor3f(0.9,0.3,0.1);
+glColor3f(0.65,0.65,0.65);
 glVertex2d(0,0);
-///glColor3f(0.0,0.0,0.0);
 glColor3f(0.0,0.138,0.96);
 glVertex2d(0,height);
 glColor3f(0.0,0.138,0.96);
 glVertex2d(width,height);
-glColor3f(1.0,0.4,0.0);
+glColor3f(0.65,0.65,0.65);
 glVertex2d(width,0);
 glEnd();
 glColor3f(1.0,1.0,1.0);
@@ -306,10 +330,8 @@ void drawPointAt(float x,float y){
 //this function mimics loading animation
 void loadpage(){
 	
-	glBegin(GL_POLYGON);
-//glColor3f(1.0,0.4,0.0);
-//glColor3f(0.9,0.3,0.1);//orange
-	glColor3f(0.5,0.4,0.9);
+glBegin(GL_POLYGON);
+glColor3f(0.5,0.4,0.9);
 glVertex2d(0,0);
 glColor3f(0.0,0.0,0.0);
 glVertex2d(0,height);
@@ -345,7 +367,6 @@ glColor3f(1.0,1.0,1.0);
 glVertex2d(width,0);
 glEnd();
 
-	//glColor3f(0.0,1.0,1.0);
     
     int xaxis = 10,yaxis=550;
 	glColor3f(0.0,1.0,0.0);
@@ -373,7 +394,6 @@ glEnd();
 	strcat(sumchar,buffer);
 	bitmap_output(xaxis,yaxis-20,sumchar,GLUT_BITMAP_HELVETICA_18);
 	glColor3f(0.0,0.0,0.0);
-	//bitmap_output(600,50,"Press 'R' to draw the tree again",GLUT_BITMAP_HELVETICA_18);
 
 
 	//output graph
@@ -468,10 +488,10 @@ void display(){
 		{
 		   instruction_page();
 		   if(show_algorithm){
-		     algorithm();
-		   /*  if(back){
-				 show_algorithm=false;
-			 }*/
+		     algorithm();		   
+		 }
+		   else if(show_help){
+			 help_page();
 		}
 		}
 		else{
@@ -697,6 +717,7 @@ void keyboardfun(unsigned char key,int x,int y){
 			       break;
 	     case 'b' :
 		 case 'B' :start=false;
+			       show_help=false;
 			       show_algorithm=false;
 			       back=true;
 				   break;
@@ -728,6 +749,11 @@ void keyboardfun(unsigned char key,int x,int y){
 		 case 'i':
 		 case 'I':
 			      show_algorithm=true;
+				  show_help=false;
+			      break;
+		 case 'h':
+		 case 'H':show_algorithm=false;
+			      show_help=true;
 			      break;
 		 case ' ':paused=!paused;
 			      break;
