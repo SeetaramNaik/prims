@@ -18,7 +18,7 @@ int costmatrix[100][100],undo_cost_stack[100],lineundostack[100][100];
 int undone=0,nf=0,f=0,found=0,nodenum=1,load=0;
 int t[100][2],totalcost;
 bool paused=false;
-bool start=false,enterpressed=false,resdisplay=false,show_algorithm=false,back=false,show_help=false;
+bool start=false,enterpressed=false,resdisplay=false,show_algorithm=false,back=false,show_help=false,show_flowchart=false;
 char undostack[100];
 char num[2];
 char text[15]="Draw mode:NONE";
@@ -49,21 +49,34 @@ int pop(){
 //this function creates nodes using location stored in oldx[][] array
 void drawpoint(){
 
-
 	float angle=4.0f*3.1416f/360;
 	int radius=5;
 	for(int i=0;i<pointer;i++){
-		glBegin(GL_POINTS);
+
+/*	glBegin(GL_TRIANGLES);     //Triangle shape node
+	glColor3f(1,1,0);
+	double angle1=0.0;
+	glBegin(GL_TRIANGLES); 
+	glVertex2d(oldx[i][0]-35,oldx[i][1]-20);
+	glVertex2d(oldx[i][0]+35,oldx[i][1]-20);
+	glVertex2d(oldx[i][0]+0,oldx[i][1]+30);*/
+	
+
+	glBegin(GL_POINTS);
 	glColor3f(1,1,0);
 	double angle1=0.0;
 	glBegin(GL_POLYGON);
 	glVertex2d(oldx[i][0]-radius*cos(0.0),radius*sin(0.0)+oldx[i][1]);
+	
 	for(int j=0;j<360;j++){
 
 	glVertex2d(oldx[i][0]-radius*cos(angle1),radius*sin(angle1)+oldx[i][1]);
 	angle1+=angle;
 	
 	}
+
+
+
 	glEnd();
 	}
 	
@@ -97,14 +110,6 @@ while(i--);
 void introduction_page()
 {
 glBegin(GL_POLYGON);
-/*glColor3f(0.9,0.3,0.1);
-glVertex2d(0,0);
-glColor3f(0.0,0.0,0.0);
-glVertex2d(0,height);
-glColor3f(0.0,0.0,0.0);
-glVertex2d(width,height);
-glColor3f(1.0,0.4,0.0);
-glVertex2d(width,0);*/
 glColor3f(0.9,0.72,0.9);
 glVertex2d(0,0);
 glColor3f(0.38,0.17,1.0);
@@ -114,14 +119,7 @@ glVertex2d(width,height);
 glColor3f(0.9,0.72,0.9);
 glVertex2d(width,0);
 glEnd();
-	
-/*glColor3f(0.0,0.0,0.55);
-glBegin(GL_QUADS);
-glVertex2d(315,30);
-glVertex2d(620,30);
-glVertex2d(620,80);
-glVertex2d(315,80);
-glEnd();*/
+
 
 glColor3f(0.0,0.0,0.55);
 glBegin(GL_QUADS);
@@ -134,28 +132,18 @@ glEnd();
 	glLineWidth(2);
 	//glColor3f(1.0,1.0,1.0);
 	glColor3f(0.0,0.0,0.69);
+	
 	bitmap_output(width/3, height-height/10, "SDM Institute of Technology, Ujire",GLUT_BITMAP_HELVETICA_18);
-	//glColor3f(0.9,0.8,0.0);
-
-	//glColor3f(1.0,1.0,1.0);
+	
 	bitmap_output(width/4+50, height-height/6, "Computer Graphics Lab with Mini Project",GLUT_BITMAP_HELVETICA_18);
 	//glColor3f(1.0,1.0,1.0);
 	bitmap_output(width/4+55, height-height/4, "****PRIMS ALGORITHM****",GLUT_BITMAP_TIMES_ROMAN_24);
-	/*glColor3f(0.9,0.8,0.0);
-	glBegin(GL_LINE_LOOP); 
-		glVertex2f(width/3-10, height-height/5.5);
-		glVertex2f(width/3+290, height-height/5.5);
-	glEnd();*/
+	
 	
 	glColor3f(0.82,0.0,0.64);
 	bitmap_output(width/15+55,height-height/2.2,"---Made by---",GLUT_BITMAP_HELVETICA_18);
 
 	glColor3f(1.0,1.0,1.0);
-	//glColor3f(0.0,0.0,0.69);//blue
-	//bitmap_output(width/15+10,height-height/1.62,"Seetaram Naik - 4SU19CS088",GLUT_BITMAP_HELVETICA_18);
-	//bitmap_output(width/15+10,height-height/1.5,"Shamanth P     - 4SU19CS089",GLUT_BITMAP_HELVETICA_18);
-	//bitmap_output(width/15+10,height-height/1.4,"Shivam Ravan  - 4SU19CS091",GLUT_BITMAP_HELVETICA_18);
-	//bitmap_output(width/15+10,height-height/1.3,"Skanda Bhat    - 4SU19CS095",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(width/15+10,height-height/1.9,"Seetaram Naik (4SU19CS088)",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(width/15+10,height-height/1.7,"Shamanth P (4SU19CS089)",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(width/15+10,height-height/1.55,"Shivam Ravan (4SU19CS091)",GLUT_BITMAP_HELVETICA_18);
@@ -170,10 +158,9 @@ glEnd();
 	glColor3f(1.0,1.0,0.9);
 	bitmap_output(width/5+135, 45, "Press 'ENTER' to continue",GLUT_BITMAP_TIMES_ROMAN_24);
 	
-	//bitmap_output(width/3, height-height/10, "SDM Institute of Technology, Ujire",GLUT_BITMAP_HELVETICA_18);
 	glFlush();
 	delay();
-	//glutPostRedisplay();
+	
 }
 
 void instruction_page()
@@ -189,23 +176,14 @@ glColor3f(1.0,0.4,0.0);
 glVertex2d(width,0);
 glEnd();
 
-
-/*	glColor3f(1.0,1.0,1.0);
-	bitmap_output(300, height-100, "****PRIMS ALGORITHM****",GLUT_BITMAP_TIMES_ROMAN_24);
-	bitmap_output(330, height-200, "---INSTRUCTIONS---",GLUT_BITMAP_TIMES_ROMAN_24);
-	bitmap_output(300, height-300, "Press 'S'        -  To START ",GLUT_BITMAP_HELVETICA_18);
-	bitmap_output(300, height-350, "Press 'I'         -  About Prims algorithm ",GLUT_BITMAP_HELVETICA_18);
-	bitmap_output(300, height-400, "Press 'H'        -  For HELP  ",GLUT_BITMAP_HELVETICA_18);
-	bitmap_output(300, height-450, "Press 'ESC'   -  To QUIT",GLUT_BITMAP_HELVETICA_18);
-	glColor3f(0.0,0.0,0.0);
-	bitmap_output(500, height-570, "Press 'A' to go to INTRODUCTION PAGE",GLUT_BITMAP_HELVETICA_18);*/
 	glColor3f(1.0,1.0,1.0);
 	bitmap_output(300, height-100, "****PRIMS ALGORITHM****",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(330, height-200, "---INSTRUCTIONS---",GLUT_BITMAP_TIMES_ROMAN_24);
 	bitmap_output(370, height-300, "Press 'S' (To START) ",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(330, height-350, "Press 'I' (About Prims algorithm) ",GLUT_BITMAP_HELVETICA_18);
 	bitmap_output(375, height-400, "Press 'H' (For HELP)  ",GLUT_BITMAP_HELVETICA_18);
-	bitmap_output(365, height-450, "Press 'ESC' (To QUIT)",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(365, height-450, "Press 'F' (For Flowchart)",GLUT_BITMAP_HELVETICA_18);
+	bitmap_output(365, height-500, "Press 'ESC' (To QUIT)",GLUT_BITMAP_HELVETICA_18);
 	glColor3f(0.0,0.0,0.0);
 	bitmap_output(500, height-570, "Press 'A' to go to INTRODUCTION PAGE",GLUT_BITMAP_HELVETICA_18);
 }
@@ -301,6 +279,204 @@ glColor3f(0.0,0.0,0.0);
 bitmap_output(width/15+600, height-570, "Press 'B' to go back",GLUT_BITMAP_HELVETICA_18);
 }
 
+void flowchart(){
+glBegin(GL_POLYGON);
+glColor3f(0.65,0.65,0.65);
+glVertex2d(0,0);
+glColor3f(0.0,0.138,0.96);
+glVertex2d(0,height);
+glColor3f(0.0,0.138,0.96);
+glVertex2d(width,height);
+glColor3f(0.65,0.65,0.65);
+glVertex2d(width,0);
+glEnd();
+//heading
+glColor3f(1.0,1.0,1.0);
+bitmap_output(width/6+130, height-50, "***WORKING FLOW CHART***",GLUT_BITMAP_TIMES_ROMAN_24);
+//introduction polygon
+glColor3f(0.0,1.0,0.0);
+glBegin(GL_POLYGON);
+glVertex2i(350,500);
+glVertex2i(555,500);
+glVertex2i(555,460);
+glVertex2i(350,460);
+glEnd();
+glColor3f(0.0,0.0,0.0);
+bitmap_output(380, 475, "Introduction page",GLUT_BITMAP_HELVETICA_18);
+//intro-instruction
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(450,460);
+glVertex2i(450,425);
+glEnd();
+
+//instruction polygon
+glColor3f(0.0,1.0,0.0);
+glBegin(GL_POLYGON);
+glVertex2i(350,425);
+glVertex2i(555,425);
+glVertex2i(555,385);
+glVertex2i(350,385);
+glEnd();
+glColor3f(0.0,0.0,0.0);
+bitmap_output(387, 400, "Instruction page",GLUT_BITMAP_HELVETICA_18);
+//horizontal
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(190,365);
+glVertex2i(690,365);
+glEnd();
+//instruction-horizontal
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(450,385);
+glVertex2i(450,365);
+glEnd();
+
+//instruction-algo
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(190,365);
+glVertex2i(190,350);
+glEnd();
+//instruction-end
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(690,365);
+glVertex2i(690,350);
+glEnd();
+//instruction-help
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(360,365);
+glVertex2i(360,350);
+glEnd();
+//instruction-simulation start
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(540,365);
+glVertex2i(540,350);
+glEnd();
+
+//algorithm polygon
+glColor3f(0.0,1.0,0.0);
+glBegin(GL_POLYGON);
+glVertex2i(110,350);
+glVertex2i(270,350);
+glVertex2i(270,310);
+glVertex2i(110,310);
+glEnd();
+glColor3f(0.0,0.0,0.0);
+bitmap_output(125, 325, "Algorithm page",GLUT_BITMAP_HELVETICA_18);
+
+
+//help polygon
+glColor3f(0.0,1.0,0.0);
+glBegin(GL_POLYGON);
+glVertex2i(290,350);
+glVertex2i(430,350);
+glVertex2i(430,310);
+glVertex2i(290,310);
+glEnd();
+glColor3f(0.0,0.0,0.0);
+bitmap_output(315, 325, "Help page",GLUT_BITMAP_HELVETICA_18);
+
+//start simulation polygon
+glColor3f(0.0,1.0,0.0);
+glBegin(GL_POLYGON);
+glVertex2i(450,350);
+glVertex2i(630,350);
+glVertex2i(630,310);
+glVertex2i(450,310);
+glEnd();
+glColor3f(0.0,0.0,0.0);
+bitmap_output(470, 325, "Start Simulation",GLUT_BITMAP_HELVETICA_18);
+//simulation start-draw graph
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(540,310);
+glVertex2i(540,275);
+glEnd();
+
+//End polygon
+glColor3f(0.0,1.0,0.0);
+glBegin(GL_POLYGON);
+glVertex2i(650,350);
+glVertex2i(730,350);
+glVertex2i(730,310);
+glVertex2i(650,310);
+glEnd();
+glColor3f(0.0,0.0,0.0);
+bitmap_output(670, 325, "End",GLUT_BITMAP_HELVETICA_18);
+// end-exit
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(690,310);
+glVertex2i(690,55);
+glEnd();
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(690,55);
+glVertex2i(450,55);
+glEnd();
+
+//simulation polygon
+glColor3f(0.0,1.0,0.0);
+glBegin(GL_POLYGON);
+glVertex2i(450,275);
+glVertex2i(630,275);
+glVertex2i(630,175);
+glVertex2i(450,175);
+glEnd();
+glColor3f(0.0,0.0,0.0);
+bitmap_output(490, 250, "Draw Node",GLUT_BITMAP_HELVETICA_18);
+bitmap_output(490, 220, "Draw Edge",GLUT_BITMAP_HELVETICA_18);
+bitmap_output(490, 190, "Draw Graph",GLUT_BITMAP_HELVETICA_18);
+//draw graph-output
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(540,175);
+glVertex2i(540,145);
+glEnd();
+
+//start simulation polygon
+glColor3f(0.0,1.0,0.0);
+glBegin(GL_POLYGON);
+glVertex2i(450,145);
+glVertex2i(630,145);
+glVertex2i(630,105);
+glVertex2i(450,105);
+glEnd();
+glColor3f(0.0,0.0,0.0);
+bitmap_output(510, 120, "Output",GLUT_BITMAP_HELVETICA_18);
+
+//draw graph-output
+glColor3f(1.0,1.0,1.0);
+glBegin(GL_LINES);
+glVertex2i(540,105);
+glVertex2i(540,75);
+glEnd();
+
+//Exit polygon
+glColor3f(0.0,1.0,0.0);
+glBegin(GL_POLYGON);
+glVertex2i(450,75);
+glVertex2i(630,75);
+glVertex2i(630,35);
+glVertex2i(450,35);
+glEnd();
+glColor3f(0.0,0.0,0.0);
+bitmap_output(520,50, "Exit",GLUT_BITMAP_HELVETICA_18);
+
+
+
+
+//back button text
+glColor3f(0.0,0.0,0.0);
+bitmap_output(50, height-570, "Press 'B' to go Back",GLUT_BITMAP_HELVETICA_18);
+
+}
+
 
 //this function draws edges using location stored in linex array
 void drawline(){
@@ -323,39 +499,6 @@ void drawline(){
 	glFlush();//glutSwapBuffers();
 }
 
-//this function does animation of lines connecting after calculating spanning tree
-void blinking_lines(){
-
-	delay();
-	glLineWidth(7.0);
-	for(int i=0;i<pointer-1;i++){
-		glColor3f(0.0,0.0,1.0);
-
-
-	glBegin(GL_LINES);
-	glVertex2i(oldx[t[i][0]][0],oldx[t[i][0]][1]);
-	glVertex2i(oldx[t[i][1]][0],oldx[t[i][1]][1]);
-	glEnd();
-	delay();
-	glFlush();//glutSwapBuffers();
-	// glutPostRedisplay();
-	glColor3f(1.0,0.0,0.0);
-	glBegin(GL_LINES);
-	glVertex2i(oldx[t[i][0]][0],oldx[t[i][0]][1]);
-	glVertex2i(oldx[t[i][1]][0],oldx[t[i][1]][1]);
-	delay();
-	glEnd();
-	/*int temp;
-	char* cst = new char[5];
-	glColor3f(0.0,1.0,0.0);
-	for(int i=0;i<lpointer-1;i++){
-		temp=costmatrix[t[i][0]][t[i][1]];
-		itoa(temp,cst,10);
-		bitmap_output((oldx[t[i][0]][0]+oldx[t[i][1]][0])/2-15,(oldx[t[i][0]][1]+oldx[t[i][1]][1])/2+8,cst,GLUT_BITMAP_TIMES_ROMAN_24);
-	}*/
-	glFlush();//glutSwapBuffers();
-	}   
-}
 
 //this displays a point when mouse clicked for first time in draw edge mode
 void drawPointAt(float x,float y){
@@ -397,7 +540,7 @@ glColor3f(1.0,1.0,1.0);
 //this function displays text output after calculating spanning tree
 void output(){
 glBegin(GL_POLYGON);
-	glColor3f(1.0,1.0,1.0);
+glColor3f(1.0,1.0,1.0);
 glVertex2d(0,0);
 glColor3f(0.0,0.0,0.0);
 glVertex2d(0,height);
@@ -443,11 +586,12 @@ glEnd();
 	float angle=4.0f*3.1416f/360;
 	int radius=5;
 	for(int i=0;i<pointer;i++){
-		glBegin(GL_POINTS);
+	glBegin(GL_POINTS);
 	glColor3f(1,1,0);
 	double angle1=0.0;
 	glBegin(GL_POLYGON);
 	glVertex2d(oldx[i][0]-radius*cos(0.0),radius*sin(0.0)+oldx[i][1]);
+	
 	for(int j=0;j<360;j++){
 
 	glVertex2d(oldx[i][0]-radius*cos(angle1),radius*sin(angle1)+oldx[i][1]);
@@ -533,6 +677,10 @@ void display(){
 		   else if(show_help){
 			 help_page();
 		}
+		   else if(show_flowchart){
+			   flowchart();
+		   }
+		   
 		}
 		else{
 		glLineWidth(25);
@@ -545,7 +693,7 @@ void display(){
 			if(!found){
 				draw_instructions();
 				glColor3f(0.1,1,0.0);
-				bitmap_output(width-width/2+200,height-height/9,text,GLUT_BITMAP_HELVETICA_18);
+				bitmap_output(width-width/2+200,height-height/9,text,GLUT_BITMAP_HELVETICA_18);  //DRAW MODE
 	 		}
 	       glPointSize(40);
 		   drawpoint();
@@ -759,6 +907,7 @@ void keyboardfun(unsigned char key,int x,int y){
 		 case 'B' :start=false;
 			       show_help=false;
 			       show_algorithm=false;
+				   show_flowchart=false;
 			       back=true;
 				   break;
 		 
@@ -790,10 +939,17 @@ void keyboardfun(unsigned char key,int x,int y){
 		 case 'I':
 			      show_algorithm=true;
 				  show_help=false;
+				  show_flowchart=false;
 			      break;
 		 case 'h':
-		 case 'H':show_algorithm=false;
-			      show_help=true;
+		 case 'H':show_help=true;
+			      show_algorithm=false;
+			      show_flowchart=false;
+			      break;
+		 case 'f':
+		 case 'F':show_flowchart=true;
+			      show_algorithm=false;
+				  show_help=false;
 			      break;
 		 case ' ':paused=!paused;
 			      break;
